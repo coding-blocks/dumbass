@@ -1,0 +1,13 @@
+{
+  "name": "dumbass",
+  "version": "0.0.1",
+  "main": "src/index.js",
+  "author": "abhishek97<hi@itsabhishek.me>",
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/joi": "^17.1.0",
+    "axios": "^0.19.2",
+    "express": "^4.17.1",
+    "mongodb": "^3.5.3"
+  }
+}
