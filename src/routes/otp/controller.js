@@ -1,5 +1,5 @@
 const { getOtpMessageText, generateOtp } = require('utils/otp')
-const { createOtp } = require('services/db')
+const { createOtp, getOtpById, updateOtpById } = require('services/db')
 const { sendSms } = require('services/sms')
 const { sendEmail } = require('services/email')
 const { ResponseError } = require('utils/error')
@@ -64,4 +64,35 @@ module.exports.handleSendOtp = async (req, res, next) => {
   } else {
     res.status(400).json(new ResponseError('MOBILE_OR_EMAIL_REQUIRED', 'Either one of mobile and email is required'))
   }
+}
+
+module.exports.handleVerifyOtp = async (req, res, next) => {
+  const { code } = req.body
+  const otp = await getOtpById(req.params.id)
+
+  if (!otp) {
+    return res.status(404).json(new ResponseError('OTP_NOT_FOUND'))
+  }
+  if (!code) {
+    return res.status(400).json(new ResponseError('VALIDATION_ERROR', 'parameter code is required'))
+  }
+
+  // otp expires if created more than 5 mins ago
+  if ( (new Date() - otp.createdAt) > (5 * 60 * 60 * 1000)  ) {
+    return res.status(400).json(new ResponseError('EXPIRED_OTP', 'This OTP is expired. You must generate a new one'))
+  }
+
+  if (otp.otp !== code) {
+    return res.status(400).json(new ResponseError('INVALID_OTP', 'the otp is invalid'))
+  }
+
+  if (otp.verifiedAt)
+    return res.status(400).json(new ResponseError('ALREADY_VERIFIED', 'the otp is already consumed'))
+
+  // otp is valid and we update the claim
+  await updateOtpById(otp._id, {
+    verifiedAt: new Date(),
+  })
+
+  res.sendStatus(204)
 }
