@@ -1,11 +1,13 @@
-require('dotenv').config()
+if (process.env.NODE_ENV !== 'production')
+  require('dotenv').config()
+
 const express = require('express')
 const app = express()
 const Sentry = require('@sentry/node');
 const { dbConnectionReady } = require('services/db')
 
 const routes = require('./routes')
-const PORT = process.env.PORT || 5001
+const PORT = 5001
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN

@@ -8,8 +8,8 @@ route.get('/', validators.POST, (req, res) => {
 })
 
 route.get('/:id', controller.handleGetById)
+route.post('/send', validators.POST, controller.handleSendOtp)
 route.post('/:id/verify', controller.handleVerifyOtp)
-route.post('/', validators.POST, controller.handleSendOtp)
 route.delete('/:id', controller.handleDeleteById)
 
 module.exports = route

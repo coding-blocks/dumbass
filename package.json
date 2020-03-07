@@ -4,6 +4,9 @@
   "main": "src/index.js",
   "author": "abhishek97<hi@itsabhishek.me>",
   "license": "MIT",
+  "scripts": {
+    "start": "node src/index.js"
+  },
   "dependencies": {
     "@hapi/joi": "^17.1.0",
     "@sendgrid/mail": "^6.5.2",
