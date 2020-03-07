@@ -96,3 +96,28 @@ module.exports.handleVerifyOtp = async (req, res, next) => {
 
   res.sendStatus(204)
 }
+
+module.exports.handleGetById = async (req, res, next) => {
+  const otp = await getOtpById(req.params.id)
+
+  if (!otp)
+    return res.sendStatus(404)
+
+  if (!otp.verifiedAt)
+    return res.status(403).json(new ResponseError('NOT_VERIFIED', 'OTP is not verified yet. You can only fetch verified, non-consumed OTPs'))
+
+  res.json(otp)
+}
+
+module.exports.handleDeleteById = async (req, res) => {
+  const otp = await getOtpById(req.params.id)
+
+  if (!otp)
+    return res.sendStatus(404)
+
+  await updateOtpById(otp._id, {
+    deletedAt: new Date()
+  })
+
+  res.sendStatus(204)
+}
