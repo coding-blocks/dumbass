@@ -21,10 +21,10 @@ jobs:
     - uses: actions/checkout@v2
 
     # Runs a single command using the runners shell
-    - name: Build, Tag, Publish Docker
-      uses: HurricanKai/Publish-Docker-Github-Action@1.12.1
+    - name: Build and Publish Docker
+      uses: elgohr/Publish-Docker-Github-Action@master
       with:
-        name: abhishek97/dumbass
+        name: abhishek971/dumbass
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
       
