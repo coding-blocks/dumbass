@@ -2,6 +2,8 @@ version: '3'
 services:
   dumbass:
     image: abhishek971/dumbass:latest
+    ports:
+      - "5001:5001"
     links:
       - mongo
     env_file:
@@ -9,5 +11,7 @@ services:
 
   mongo:
     image: mongo
+    ports:
+      - "27017:27017"
     env_file:
       - .docker_env
