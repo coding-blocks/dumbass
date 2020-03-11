@@ -7,7 +7,8 @@ const {getClientByToken} = require('services/db');
 passport.use(new BearerStatergy(
     async (token,done) => {
         const client = await getClientByToken(token)
-        if(!client){return done(null,false)}
+        if(!client)
+            return done(null,false)
         return done(null,client)
     }
 ));

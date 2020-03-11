@@ -9,9 +9,10 @@ route.get('/', validators.POST, (req, res) => {
 })
 
 route.use(passport.initialize())
-route.get('/:id', passport.authenticate('bearer',{session : false}), controller.handleGetById)
-route.post('/send', passport.authenticate('bearer',{session : false}), validators.POST, controller.handleSendOtp)
-route.post('/:id/verify',passport.authenticate('bearer',{session : false}), controller.handleVerifyOtp)
-route.delete('/:id', passport.authenticate('bearer',{session : false}), controller.handleDeleteById)
+route.use(passport.authenticate('bearer',{session:false}))
+route.get('/:id', controller.handleGetById)
+route.post('/send', validators.POST, controller.handleSendOtp)
+route.post('/:id/verify', controller.handleVerifyOtp)
+route.delete('/:id', controller.handleDeleteById)
 
 module.exports = route
