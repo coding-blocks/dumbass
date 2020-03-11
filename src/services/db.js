@@ -26,3 +26,7 @@ module.exports.getOtpById = (id) => db.collection('otps').findOne({
 module.exports.updateOtpById = (id, payload) => db.collection('otps').updateOne({
   _id: new ObjectId(id)
 }, { $set: payload })
+
+module.exports.getClientByToken = async(clientToken) => db.collection('clients').findOne({
+      token : clientToken.toString()
+    })
