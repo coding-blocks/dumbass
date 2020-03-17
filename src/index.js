@@ -7,7 +7,7 @@ const Sentry = require('@sentry/node');
 const { dbConnectionReady } = require('services/db')
 
 const routes = require('./routes')
-const PORT = 5001
+const PORT = process.env.PORT || 5002
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN
