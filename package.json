@@ -18,5 +18,8 @@
     "mustache": "^4.0.0",
     "passport": "^0.4.1",
     "passport-http-bearer": "^1.0.1"
+  },
+  "devDependencies": {
+    "morgan": "^1.9.1"
   }
 }
