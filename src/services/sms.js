@@ -11,8 +11,8 @@ module.exports.sendSms = async(mobile, messageText) => {
       number: mobile.replace("+", "").replace("-", "")
     }
   })
-  if(response.data.includes("Message Submitted"))
-    return response
+  // if(response.data.includes("Message Submitted"))
+  return response
 
-  throw new Error(response.data)
+  // throw new Error(response.data)
 }
