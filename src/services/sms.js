@@ -6,7 +6,7 @@ module.exports.sendSms = async(mobile, messageText) => {
       username: process.env.MOBILE_VERIFY_USERNAME,
       password: process.env.MOBILE_VERIFY_PASS,
       senderid: 'CDGBLK',
-      route: 4,
+      route: 2,
       message: messageText,
       number: mobile.replace("+", "").replace("-", "")
     }
