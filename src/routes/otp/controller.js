@@ -17,7 +17,8 @@ module.exports.handleSendOtp = async (req, res, next) => {
     // create otp in mongo
     const { id: createdOtpId, revert } = await createOtp({
       type: 'mobile',
-      mobile: dialCode + mobile,
+      mobile,
+      dialCode,
       message: messageText,
       otp,
       payload
@@ -31,7 +32,7 @@ module.exports.handleSendOtp = async (req, res, next) => {
     } catch (err) {
       sentry.captureException(err)
       await revert()
-      return res.json(new ResponseError('SMS_API_ERROR', "Can't send OTP to that number"))
+      return res.status(400).json(new ResponseError('SMS_API_ERROR', "Can't send OTP to that number"))
     }
 
   } else if (req.body.email) {
@@ -58,7 +59,7 @@ module.exports.handleSendOtp = async (req, res, next) => {
      sentry.captureException(err)
      // revert DB insert
      await revert()
-     return res.json(new ResponseError('EMAIL_API_ERROR', "Can't send OTP to that email"))
+     return res.status(400).json(new ResponseError('EMAIL_API_ERROR', "Can't send OTP to that email"))
    }
 
   } else {
@@ -68,6 +69,11 @@ module.exports.handleSendOtp = async (req, res, next) => {
 
 module.exports.handleVerifyOtp = async (req, res, next) => {
   const { code } = req.body
+
+  if (req.params.id.length != 24) {
+    return res.status(404).json(new ResponseError('OTP_NOT_FOUND'))
+  }
+
   const otp = await getOtpById(req.params.id)
 
   if (!otp) {
@@ -87,7 +93,7 @@ module.exports.handleVerifyOtp = async (req, res, next) => {
   }
 
   if (otp.verifiedAt)
-    return res.status(400).json(new ResponseError('ALREADY_VERIFIED', 'the otp is already consumed'))
+    return res.status(400).json(new ResponseError('ALREADY_VERIFIED', 'the otp is already verified'))
 
   // otp is valid and we update the claim
   await updateOtpById(otp._id, {

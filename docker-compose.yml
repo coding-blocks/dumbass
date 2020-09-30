@@ -1,0 +1,22 @@
+version: '3'
+services:
+  dumbass:
+    image: abhishek971/dumbass:latest
+    ports:
+      - "5001:5001"
+    links:
+      - mongo
+    env_file:
+      - .docker_env
+
+  mongo:
+    image: mongo
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+    env_file:
+      - .docker_env
+
+volumes:
+  mongo_data:

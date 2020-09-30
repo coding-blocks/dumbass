@@ -4,6 +4,9 @@
   "main": "src/index.js",
   "author": "abhishek97<hi@itsabhishek.me>",
   "license": "MIT",
+  "scripts": {
+    "start": "node src/index.js"
+  },
   "dependencies": {
     "@hapi/joi": "^17.1.0",
     "@sendgrid/mail": "^6.5.2",
@@ -12,6 +15,11 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongodb": "^3.5.3",
-    "mustache": "^4.0.0"
+    "mustache": "^4.0.0",
+    "passport": "^0.4.1",
+    "passport-http-bearer": "^1.0.1"
+  },
+  "devDependencies": {
+    "morgan": "^1.9.1"
   }
 }
