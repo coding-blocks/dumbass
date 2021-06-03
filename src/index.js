@@ -11,6 +11,11 @@ Sentry.init({
   dsn: process.env.SENTRY_DSN
 })
 app.use(express.json())
+
+app.get('/', (req, res) => {
+  res.send('OK')
+});
+
 app.use(routes)
 
 dbConnectionReady.then(() => {
