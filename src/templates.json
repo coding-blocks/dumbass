@@ -1,0 +1,10 @@
+{
+  "MOBILE_VERIFICATION": {
+    "dltTemplateId": "1207162159709457848",
+    "text": "{{code}} is the OTP for Mobile Verification valid for 10 mins. Do not share it with anyone.\n-Coding Blocks"
+  },
+  "ACCOUNT_ACCESS": {
+    "dltTemplateId": "1207162159364871381",
+    "text": "{{code}} is the OTP for accessing your Coding Blocks Account valid for 10 mins. Do not share it with anyone.\n-Coding Blocks"
+  }
+}

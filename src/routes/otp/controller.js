@@ -3,16 +3,17 @@ const { createOtp, getOtpById, updateOtpById } = require('services/db')
 const { sendSms } = require('services/sms')
 const { sendEmail } = require('services/email')
 const { ResponseError } = require('utils/error')
+const messageTemplates = require('templates')
 const sentry = require('@sentry/node')
 
 module.exports.handleSendOtp = async (req, res, next) => {
   // get the message to be sent
   const otp = generateOtp()
-  const messageText = getOtpMessageText(otp, req.body.template)
+  const messageText = getOtpMessageText(otp, req.body.msgTemplate)
 
   if (req.body.mobile) {
     // we are sending an sms on mobile
-    const { mobile, dialCode = '+91', payload } = req.body
+    const { mobile, dialCode = '+91', payload, msgTemplate } = req.body
 
     // create otp in mongo
     const { id: createdOtpId, revert } = await createOtp({
@@ -24,7 +25,7 @@ module.exports.handleSendOtp = async (req, res, next) => {
     })
 
     try {
-      await sendSms(dialCode + mobile, messageText)
+      await sendSms(dialCode + mobile, messageText, messageTemplates[msgTemplate].dltTemplateId)
       res.json({
         id: createdOtpId
       })
