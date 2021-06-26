@@ -78,8 +78,8 @@ module.exports.handleVerifyOtp = async (req, res, next) => {
     return res.status(400).json(new ResponseError('VALIDATION_ERROR', 'parameter code is required'))
   }
 
-  // otp expires if created more than 5 mins ago
-  if ( (new Date() - otp.createdAt) > (5 * 60 * 60 * 1000)  ) {
+  // otp expires if created more than 10 mins ago
+  if ( (new Date() - otp.createdAt) > (10 * 60 * 1000)  ) {
     return res.status(400).json(new ResponseError('EXPIRED_OTP', 'This OTP is expired. You must generate a new one'))
   }
 
