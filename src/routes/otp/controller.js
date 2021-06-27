@@ -83,7 +83,7 @@ module.exports.handleVerifyOtp = async (req, res, next) => {
     return res.status(400).json(new ResponseError('EXPIRED_OTP', 'This OTP is expired. You must generate a new one'))
   }
 
-  if (otp.otp !== code) {
+  if (+otp.otp !== +code) {
     return res.status(400).json(new ResponseError('INVALID_OTP', 'the otp is invalid'))
   }
 
