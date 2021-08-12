@@ -75,7 +75,7 @@ module.exports.handleVerifyOtp = async (req, res, next) => {
     return res.status(404).json(new ResponseError('OTP_NOT_FOUND'))
   }
   if (!code) {
-    return res.status(400).json(new ResponseError('VALIDATION_ERROR', 'parameter code is required'))
+    return res.status(400).json(new ResponseError('VALIDATION_ERROR', 'Parameter code is required'))
   }
 
   // otp expires if created more than 10 mins ago
@@ -84,11 +84,11 @@ module.exports.handleVerifyOtp = async (req, res, next) => {
   }
 
   if (+otp.otp !== +code) {
-    return res.status(400).json(new ResponseError('INVALID_OTP', 'the otp is invalid'))
+    return res.status(400).json(new ResponseError('INVALID_OTP', 'The OTP does not match'))
   }
 
   if (otp.verifiedAt)
-    return res.status(400).json(new ResponseError('ALREADY_VERIFIED', 'the otp is already consumed'))
+    return res.status(400).json(new ResponseError('ALREADY_VERIFIED', 'The OTP has already been consumed'))
 
   // otp is valid and we update the claim
   await updateOtpById(otp._id, {
