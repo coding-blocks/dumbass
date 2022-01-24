@@ -18,7 +18,7 @@ module.exports.handleSendOtp = async (req, res, next) => {
     // create otp in mongo
     const { id: createdOtpId, revert } = await createOtp({
       type: 'mobile',
-      mobile: dialCode + mobile,
+      mobile: dialCode + '-' + mobile,
       message: messageText,
       otp,
       payload
