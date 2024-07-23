@@ -81,6 +81,11 @@ module.exports.handleVerifyOtp = async (req, res, next) => {
   if (!otp) {
     return res.status(404).json(new ResponseError('OTP_NOT_FOUND'))
   }
+
+  if(!email && !mobile) {
+    return res.status(400).json(new ResponseError('INVALID_REQUEST'))
+  }
+  
   if (!code) {
     return res.status(400).json(new ResponseError('VALIDATION_ERROR', 'Parameter code is required'))
   }
