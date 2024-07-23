@@ -9,8 +9,8 @@ const twoFactor = require('../../services/two-factor')
 
 module.exports.handleSendOtp = async (req, res, next) => {
   // get the message to be sent
-  // const otp = generateOtp()
-  // const messageText = getOtpMessageText(otp, req.body.msgTemplate)
+  const otp = generateOtp()
+  const messageText = getOtpMessageText(otp, req.body.msgTemplate)
 
   if (req.body.mobile) {
     // we are sending an sms on mobile
