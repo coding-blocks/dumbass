@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:6
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - internal
+
+  email-service:
+    build: .
+    restart: always
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+      - MONGODB_URI=mongodb://mongo:27017
+      - DATABASE_NAME=otp_db
+      - SENDGRID_KEY=${SENDGRID_KEY}
+      - TWO_FACTOR_ENDPOINT=${TWO_FACTOR_ENDPOINT}
+      - TWO_FACTOR_NAMESPACE=${TWO_FACTOR_NAMESPACE}
+      - TWO_FACTOR_SECRET=${TWO_FACTOR_SECRET}
+      - SENTRY_DSN=${SENTRY_DSN}
+    depends_on:
+      - mongo
+    networks:
+      - internal
+
+volumes:
+  mongo_data:
+
+networks:
+  internal:
