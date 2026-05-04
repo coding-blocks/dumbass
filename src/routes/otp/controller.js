@@ -8,9 +8,9 @@ const sentry = require('@sentry/node')
 const twoFactor = require('../../services/two-factor')
 
 module.exports.handleSendOtp = async (req, res, next) => {
-  // get the message to be sent
   const otp = generateOtp()
-  const messageText = getOtpMessageText(otp, req.body.msgTemplate)
+  const msgTemplate = req.body.email ? 'EMAIL_OTP' : req.body.msgTemplate
+  const messageText = getOtpMessageText(otp, msgTemplate)
 
   if (req.body.mobile) {
     // we are sending an sms on mobile
