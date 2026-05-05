@@ -56,7 +56,7 @@ module.exports.handleSendOtp = async (req, res, next) => {
 
    try {
      // send the actual email
-     await sendEmail(email, messageText)
+     await sendEmail(email, otp)
 
      // send back response
      res.json({

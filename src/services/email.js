@@ -2,7 +2,7 @@ const sg = require('@sendgrid/mail');
 
 sg.setApiKey(process.env.SENDGRID_KEY)
 
-module.exports.sendEmail = (email, messageText) => {
+module.exports.sendEmail = (email, otp) => {
   const senderEmail = process.env.SENDGRID_SENDER_EMAIL || 'mailer@online.codingblocks.com'
   const senderName = process.env.SENDGRID_SENDER_NAME || 'Vidyamandir Classes'
 
@@ -27,7 +27,7 @@ module.exports.sendEmail = (email, messageText) => {
               <p style="font-size:16px;color:#333333;margin:0 0 16px;">Dear Student,</p>
               <p style="font-size:16px;color:#333333;margin:0 0 24px;">Use the OTP below to log in to your Vidyamandir Classes account. It is valid for <strong>10 minutes</strong>. Do not share it with anyone.</p>
               <div style="text-align:center;margin:24px 0;">
-                <span style="display:inline-block;background-color:#f0f4ff;border:2px dashed #1a2a6c;border-radius:8px;padding:16px 40px;font-size:36px;font-weight:bold;letter-spacing:8px;color:#1a2a6c;">${messageText}</span>
+                <span style="display:inline-block;background-color:#f0f4ff;border:2px dashed #1a2a6c;border-radius:8px;padding:16px 40px;font-size:36px;font-weight:bold;letter-spacing:12px;color:#1a2a6c;font-family:monospace;">${otp}</span>
               </div>
               <p style="font-size:14px;color:#666666;margin:24px 0 0;">If you did not request this OTP, please ignore this email.</p>
             </td>
@@ -49,6 +49,6 @@ module.exports.sendEmail = (email, messageText) => {
     to: email,
     subject: 'Your OTP - Vidyamandir Classes',
     html,
-    text: messageText,
+    text: `Your OTP is ${otp}. It is valid for 10 minutes. Do not share it with anyone. - Vidyamandir Classes`,
   })
 }
